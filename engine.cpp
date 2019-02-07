@@ -65,8 +65,8 @@ enum groupLabels : std::size_t
 
     Map::LoadMap("assets/16x16.map", 16, 16);
     
-    player.addComponent<TransformComponent>(100, 500);
-    player.addComponent<SpriteComponent>("assets/sprites/imp_idle_anim_f0.png");
+    player.addComponent<TransformComponent>(100, 500, 48, 38, 3);
+    player.addComponent<SpriteComponent>("assets/gothic-hero-idle.png", 4, 100);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
