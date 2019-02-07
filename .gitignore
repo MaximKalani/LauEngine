@@ -1,0 +1,9 @@
+assets/
+.clang/
+.codelite/
+Debug/
+*.workspace
+*.project
+*.mk
+Makefile
+*.txt
