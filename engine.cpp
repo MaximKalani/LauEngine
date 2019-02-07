@@ -18,11 +18,6 @@ SDL_Event Game::event;
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
 
-auto& tile0(manager.addEntity());
-auto& tile1(manager.addEntity());
-auto& tile2(manager.addEntity());
-auto& tile3(manager.addEntity());
-
  Game::Game()
  {}
 
@@ -59,25 +54,14 @@ auto& tile3(manager.addEntity());
     }
 
     mapp = new Map();
-    
-    tile0.addComponent<TileComponent>(200, 200, 32, 32, 0);
-    tile1.addComponent<TileComponent>(250, 250, 32, 32, 1);
-    tile2.addComponent<TileComponent>(150, 150, 32, 32, 2);
-    tile3.addComponent<TileComponent>(400, 300, 32, 32, 3);
-    
-    tile1.addComponent<ColliderComponent>("wall_left");
-    tile2.addComponent<ColliderComponent>("wall_right");
-    tile3.addComponent<ColliderComponent>("wall_mid");
-    
+
+    Map::LoadMap("assets/16x16.map", 16, 16);
     
     player.addComponent<TransformComponent>(100, 500);
     player.addComponent<SpriteComponent>("assets/sprites/imp_idle_anim_f0.png");
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     
-    wall.addComponent<TransformComponent>(0, 0, 100, 100, 1);
-    wall.addComponent<SpriteComponent>("assets/sprites/wall_mid.png");
-    wall.addComponent<ColliderComponent>("wall");
  }
 
  void Game::handleEvents()
@@ -107,7 +91,6 @@ auto& tile3(manager.addEntity());
  void Game::render()
  {
     SDL_RenderClear(renderer);
-    //mapp->DrawMap();
     manager.draw();
     SDL_RenderPresent(renderer);
 
@@ -124,4 +107,11 @@ auto& tile3(manager.addEntity());
 bool Game::running()
 {
     return isRunning;
+}
+
+void Game::AddTile(int id, int x, int y)
+{
+    auto& tile(manager.addEntity());
+    tile.addComponent<TileComponent>(x,y,32,32,id);
+    
 }

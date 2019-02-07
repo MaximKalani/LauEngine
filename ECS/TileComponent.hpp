@@ -29,7 +29,7 @@ public:
         {
             case 0:
                 path = "assets/sprites/floor_1.png";
-                break;
+                break;  
             case 1:
                 path = "assets/sprites/wall_left.png";
                 break;
