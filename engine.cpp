@@ -97,11 +97,11 @@ auto& tile3(manager.addEntity());
      manager.refresh();
      manager.update();
      
-     if(Collision::AABB(player.getComponent<ColliderComponent>().collider, 
-        wall.getComponent<ColliderComponent>().collider))
-        {
-            printf("collision\n");
-        }
+     for(auto cc : colliders)
+     {
+        Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
+     }
+     
  }
 
  void Game::render()
