@@ -16,7 +16,9 @@ SDL_Renderer *Game::renderer = nullptr;
 SDL_Event Game::event;
 
 auto& player(manager.addEntity());
-auto& wall(manager.addEntity());
+
+
+const char* tileset = "assets/tileset.png";
 
 enum groupLabels : std::size_t
 {
@@ -63,7 +65,7 @@ enum groupLabels : std::size_t
 
     mapp = new Map();
 
-    Map::LoadMap("assets/16x16.map", 16, 16, 32);
+    Map::LoadMap("assets/tilemap.txt", 16, 16, 32);
     
     player.addComponent<TransformComponent>(100, 500, 24, 16, 2);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
@@ -135,9 +137,9 @@ bool Game::running()
     return isRunning;
 }
 
-void Game::AddTile(int id, int x, int y, int scale)
+void Game::AddTile(int srcX, int srcY,int xpos, int ypos, int destTileSize)
 {
     auto& tile(manager.addEntity());
-    tile.addComponent<TileComponent>(x,y,scale,scale,id);
+    tile.addComponent<TileComponent>(srcX, srcY, xpos,ypos, tileset, destTileSize);
     tile.addGroup(groupMap);
 }

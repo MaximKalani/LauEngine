@@ -23,7 +23,7 @@ class Game {
         bool running();
         int cnt = 0;
         
-        static void AddTile(int id, int x, int y, int scale);
+        static void AddTile(int scrX, int srcY, int x, int y, int scale);
         static SDL_Renderer *renderer;
         static SDL_Event event;
         static std::vector<ColliderComponent*> colliders;
