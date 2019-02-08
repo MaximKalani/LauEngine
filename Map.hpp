@@ -9,7 +9,7 @@ public:
     Map();
     ~Map();
 
-    static void LoadMap(std::string path, int sizeX, int sizeY);
+    static void LoadMap(std::string path, int sizeX, int sizeY, int scale);
 
 
 private:

@@ -81,7 +81,7 @@ public:
         destRect.y = (int)transform->position.y;
         
         destRect.w = transform->width * transform->scale;
-        destRect.h = transform->width * transform->scale;
+        destRect.h = transform->height * transform->scale;
     }
 
     void draw() override

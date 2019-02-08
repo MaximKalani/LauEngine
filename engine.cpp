@@ -63,10 +63,10 @@ enum groupLabels : std::size_t
 
     mapp = new Map();
 
-    Map::LoadMap("assets/16x16.map", 16, 16);
+    Map::LoadMap("assets/16x16.map", 16, 16, 32);
     
-    player.addComponent<TransformComponent>(100, 500, 32, 32, 2);
-    player.addComponent<SpriteComponent>("assets/spritesheet.png", true);
+    player.addComponent<TransformComponent>(100, 500, 24, 16, 2);
+    player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
@@ -135,9 +135,9 @@ bool Game::running()
     return isRunning;
 }
 
-void Game::AddTile(int id, int x, int y)
+void Game::AddTile(int id, int x, int y, int scale)
 {
     auto& tile(manager.addEntity());
-    tile.addComponent<TileComponent>(x,y,32,32,id);
+    tile.addComponent<TileComponent>(x,y,scale,scale,id);
     tile.addGroup(groupMap);
 }
