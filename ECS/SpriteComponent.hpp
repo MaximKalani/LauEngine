@@ -6,6 +6,7 @@
 #include "../TextureManager.hpp"
 #include "Animation.hpp"
 #include <map>
+#include <cstring>
 
 class SpriteComponent : public Component
 {
@@ -21,7 +22,17 @@ private:
 public:
     
     int animIndex = 0;
-    std::map<const char*, Animation> animations;
+    
+    struct StringCompare
+    {
+        bool operator()(const char *a, const char *b)
+        {
+            return std::strcmp(a, b) < 0;
+        }
+    };
+        
+        
+    std::map<const char*, Animation, StringCompare> animations;
     
     SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
     

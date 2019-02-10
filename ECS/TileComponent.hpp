@@ -3,6 +3,7 @@
 
 #include "ECS.hpp"
 #include <SDL2/SDL.h>
+#include "../TextureManager.hpp"
 
 class TileComponent : public Component
 {

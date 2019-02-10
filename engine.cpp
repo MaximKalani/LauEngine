@@ -7,6 +7,10 @@
 
 #include "Collision.hpp"
 
+#include "EventHandler.hpp"
+
+
+EventHandler handler;
 Map* mapp;
 Manager manager;
 
@@ -77,7 +81,7 @@ auto& enemies(manager.getGroup(groupEnemies));
     
     player.addComponent<TransformComponent>(400, 320, 24, 16, 4);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
-    player.addComponent<KeyboardController>();
+    //player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
     
@@ -86,14 +90,9 @@ auto& enemies(manager.getGroup(groupEnemies));
 
  void Game::handleEvents()
  {
-    SDL_PollEvent(&event);
-    switch(event.type) {
-        case SDL_QUIT:
-            isRunning = false;
-            break;
-        default:
-            break;
-    }
+
+    handler.handleInput(&player);
+
  }
 
  void Game::update()
@@ -110,7 +109,7 @@ auto& enemies(manager.getGroup(groupEnemies));
         t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
         
     }
-     
+
  }
 
 
