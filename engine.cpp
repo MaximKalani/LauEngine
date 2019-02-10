@@ -81,7 +81,6 @@ auto& enemies(manager.getGroup(groupEnemies));
     
     player.addComponent<TransformComponent>(400, 320, 24, 16, 4);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
-    //player.addComponent<KeyboardController>();
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
     

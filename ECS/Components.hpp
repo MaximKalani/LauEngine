@@ -6,8 +6,6 @@
 #include "TransformComponent.hpp"
 #include "ColliderComponent.hpp"
 #include "SpriteComponent.hpp"
-//#include "KeyboardController.hpp"
-
 #include "TileComponent.hpp"
 
 #endif // COMPONENTS_HPP_INCLUDED
