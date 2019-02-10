@@ -29,6 +29,18 @@ class Game {
         static std::vector<ColliderComponent*> colliders;
         static bool isRunning;
         
+
+        
+        
+        enum groupLabels : std::size_t
+        {
+            groupMap,
+            groupPlayers,
+            groupEnemies,
+            groupColliders
+        };
+
+
     private:
         
         SDL_Window *window;

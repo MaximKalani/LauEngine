@@ -3,14 +3,21 @@
 
 #include <string>
 
+
 class Map {
 
 public:
-    Map();
+    Map(const char* tilemap, const char* tileset, int sizeX, int sizeY, int sourceTileSize, int destinationTileSize);
     ~Map();
 
-    static void LoadMap(std::string path, int sizeX, int sizeY, int scale);
-
+    const char* levelOneTileset;
+    const char* levelOneTilemap;
+    
+    int srcTileSize;
+    int destTileSize;
+        
+    void LoadMap(const char* path, int sizeX, int sizeY);
+    void AddTile(int srcX, int srcY,int xpos, int ypos);
 
 private:
 

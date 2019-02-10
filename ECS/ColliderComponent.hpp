@@ -5,6 +5,8 @@
 #include <SDL2/SDL.h>
 #include "ECS.hpp"
 #include "Components.hpp"
+#include "../TextureManager.hpp"
+
 
 class ColliderComponent : public Component
 {

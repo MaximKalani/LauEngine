@@ -25,20 +25,13 @@ bool Game::isRunning = false;
 auto& player(manager.addEntity());
 
 
-const char* tileset = "assets/tileset.png";
-
-enum groupLabels : std::size_t
-{
-    groupMap,
-    groupPlayers,
-    groupEnemies,
-    groupColliders
-};
 
 
-auto& tiles(manager.getGroup(groupMap));
-auto& players(manager.getGroup(groupPlayers));
-auto& enemies(manager.getGroup(groupEnemies));
+
+
+auto& tiles(manager.getGroup(Game::groupMap));
+auto& players(manager.getGroup(Game::groupPlayers));
+auto& enemies(manager.getGroup(Game::groupEnemies));
 
  Game::Game()
  {}
@@ -75,9 +68,9 @@ auto& enemies(manager.getGroup(groupEnemies));
         isRunning = false;
     }
 
-    mapp = new Map();
+    mapp = new Map("assets/tilemap.txt", "assets/tileset.png", 16, 16, 16, 64);
 
-    Map::LoadMap("assets/tilemap.txt", 16, 16, 64);
+    //mapp->LoadMap("assets/tilemap.txt", "assets/tileset.png", 16, 16, 16, 64);
     
     player.addComponent<TransformComponent>(400, 320, 24, 16, 4);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
@@ -145,9 +138,3 @@ bool Game::running()
     return isRunning;
 }
 
-void Game::AddTile(int srcX, int srcY,int xpos, int ypos, int destTileSize)
-{
-    auto& tile(manager.addEntity());
-    tile.addComponent<TileComponent>(srcX, srcY, xpos,ypos, tileset, destTileSize);
-    tile.addGroup(groupMap);
-}
