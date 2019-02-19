@@ -92,8 +92,17 @@ auto& enemies(manager.getGroup(Game::groupEnemies));
      manager.refresh();
      manager.update();
      
+     
      Vector2D pVel = player.getComponent<TransformComponent>().velocity;
      int pSpeed = player.getComponent<TransformComponent>().speed;
+     
+     
+     if(pVel.x != 0 && pVel.y != 0)
+     {
+         pSpeed = 2;
+     }
+     
+     
      
     for (auto t : tiles)
     {
