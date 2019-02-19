@@ -1,4 +1,3 @@
-assets/
 .clang/
 .codelite/
 Debug/
@@ -7,3 +6,4 @@ Debug/
 *.mk
 Makefile
 *.txt
+!assets/tilemap.txt
