@@ -5,7 +5,7 @@ Game *game = nullptr;
 int main(int argc, const char* argv[])
 {
     game = new Game();
-    game->init("Laufin Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 1);
+    game->init("Laufin Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
 
     const int FPS = 60;
     const int frameDelay = 1000/ FPS;
