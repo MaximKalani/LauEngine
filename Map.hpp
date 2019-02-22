@@ -18,6 +18,7 @@ public:
         
     void LoadMap(const char* path, int sizeX, int sizeY);
     void AddTile(int srcX, int srcY,int xpos, int ypos);
+    void AddCollider(std::string, int x, int y, int destTileSize);
 
 private:
 

@@ -17,6 +17,7 @@ public:
     
     int speed = 3;
     
+    bool isInverted = false;
     
     TransformComponent()
     {

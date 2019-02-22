@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <SDL2/SDL_image.h>
 #include <vector>
+#include "Vector2D.hpp"
 
 class ColliderComponent;
 
@@ -26,7 +27,8 @@ class Game {
         static void AddTile(int scrX, int srcY, int x, int y, int scale);
         static SDL_Renderer *renderer;
         static SDL_Event event;
-        static std::vector<ColliderComponent*> colliders;
+        //static std::vector<ColliderComponent*> colliders;
+        Vector2D playerPrevPos;
         static bool isRunning;
 
 

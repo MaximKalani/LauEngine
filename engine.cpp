@@ -14,8 +14,6 @@ EventHandler handler;
 Map* mapp;
 Manager manager;
 
-std::vector<ColliderComponent*> Game::colliders;
-
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Event Game::event;
 
@@ -24,23 +22,18 @@ bool Game::isRunning = false;
 
 auto& player(manager.addEntity());
 
-
-
-
-
-
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
-auto& enemies(manager.getGroup(Game::groupEnemies));
+auto& colliders(manager.getGroup(Game::groupColliders));
 
- Game::Game()
- {}
+Game::Game()
+{}
 
- Game::~Game()
- {}
+Game::~Game()
+{}
 
- void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
- {
+void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+{
     int flags = 0;
     if(fullscreen)
     {
@@ -70,53 +63,60 @@ auto& enemies(manager.getGroup(Game::groupEnemies));
 
     mapp = new Map("assets/tilemap.txt", "assets/tileset.png", 16, 16, 16, 64);
 
-    //mapp->LoadMap("assets/tilemap.txt", "assets/tileset.png", 16, 16, 16, 64);
-    
     player.addComponent<TransformComponent>(400, 320, 24, 16, 4);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
     
-    
  }
 
- void Game::handleEvents()
- {
-
+void Game::handleEvents()
+{
     handler.handleInput(&player);
+}
 
- }
+void Game::update()
+{
+    manager.refresh();
+    manager.update();
 
- void Game::update()
- {
-     manager.refresh();
-     manager.update();
-     
-     
-     Vector2D pVel = player.getComponent<TransformComponent>().velocity;
-     int pSpeed = player.getComponent<TransformComponent>().speed;
-     
-     
-     if(pVel.x != 0 && pVel.y != 0)
-     {
-         pSpeed = 2;
-     }
-     
-     
-     
+    Vector2D pVel = player.getComponent<TransformComponent>().velocity;
+    int pSpeed = player.getComponent<TransformComponent>().speed;
+    auto pCollider = player.getComponent<ColliderComponent>();
+    
+    
+    if(pVel.x != 0 && pVel.y != 0)
+    {
+        pSpeed = 2;
+    }
+    
+    
+    for (auto c : colliders)
+    {
+        if(Collision::AABB(c->getComponent<ColliderComponent>(), pCollider))
+        {
+            if(c->getComponent<ColliderComponent>().tag == "terrain")
+            {
+                printf("wall hit\n");
+            }
+        }
+        
+        c->getComponent<ColliderComponent>().collider.x += -(pVel.x * pSpeed);
+        c->getComponent<ColliderComponent>().collider.y += -(pVel.y * pSpeed);
+    }
+
     for (auto t : tiles)
     {
         t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
         t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
-        
     }
 
- }
+}
 
 
 
- void Game::render()
- {
+void Game::render()
+{
     SDL_RenderClear(renderer);
     for (auto& t : tiles)
     {
@@ -126,21 +126,21 @@ auto& enemies(manager.getGroup(Game::groupEnemies));
     {
         p->draw();
     }
-    for (auto& e : enemies)
+    for (auto& c : colliders)
     {
-        e->draw();
+        c->draw();
     }
     SDL_RenderPresent(renderer);
 
- }
+}
 
- void Game::clean()
- {
+void Game::clean()
+{
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     printf("Game cleaned");
- }
+}
 
 bool Game::running()
 {
