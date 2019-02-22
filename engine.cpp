@@ -90,7 +90,14 @@ void Game::update()
         pSpeed = 2;
     }
     
+    //try to move
+    for(auto c : colliders)
+    {
+        c->getComponent<ColliderComponent>().collider.x += -(pVel.x * pSpeed);
+        c->getComponent<ColliderComponent>().collider.y += -(pVel.y * pSpeed);
+    }
     
+    //if (collides) - move back
     for (auto c : colliders)
     {
         if(Collision::AABB(c->getComponent<ColliderComponent>(), pCollider))
@@ -98,17 +105,31 @@ void Game::update()
             if(c->getComponent<ColliderComponent>().tag == "terrain")
             {
                 printf("wall hit\n");
+                collides = true;
             }
         }
         
-        c->getComponent<ColliderComponent>().collider.x += -(pVel.x * pSpeed);
-        c->getComponent<ColliderComponent>().collider.y += -(pVel.y * pSpeed);
+        
     }
 
-    for (auto t : tiles)
+    if(!collides) //move tiles if does not collide
     {
-        t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
-        t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
+            
+        for (auto t : tiles)
+        {
+            t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
+            t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
+        }
+
+    }
+    else //if collide - do not move tiles and move colliders back
+    {
+        for(auto c : colliders)
+        {
+            c->getComponent<ColliderComponent>().collider.x += (pVel.x * pSpeed);
+            c->getComponent<ColliderComponent>().collider.y += (pVel.y * pSpeed);
+        }
+        collides = false;
     }
 
 }

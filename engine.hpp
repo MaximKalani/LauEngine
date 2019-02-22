@@ -23,7 +23,7 @@ class Game {
 
         bool running();
         int cnt = 0;
-        
+        bool collides = false;
         static void AddTile(int scrX, int srcY, int x, int y, int scale);
         static SDL_Renderer *renderer;
         static SDL_Event event;
