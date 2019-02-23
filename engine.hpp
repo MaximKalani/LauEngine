@@ -22,15 +22,14 @@ class Game {
         void clean();
 
         bool running();
-        int cnt = 0;
+        
         bool collides = false;
-        static void AddTile(int scrX, int srcY, int x, int y, int scale);
+        
         static SDL_Renderer *renderer;
         static SDL_Event event;
-        //static std::vector<ColliderComponent*> colliders;
-        Vector2D playerPrevPos;
-        static bool isRunning;
 
+        static bool isRunning;
+        static bool drawColliders;
 
         
         

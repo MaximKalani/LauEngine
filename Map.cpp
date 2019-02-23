@@ -83,14 +83,7 @@ void Map::AddCollider(std::string t, int x, int y, int destTileSize)
     tCol.addComponent<ColliderComponent>(t);
     tCol.getComponent<ColliderComponent>().collider = {x, y, destTileSize, destTileSize};
     tCol.getComponent<ColliderComponent>().scale = destTileSize/16;
-    //tCol.addComponent<TileComponent>(16,16, x, y, "collider.png", 16, 64);
     tCol.addGroup(Game::groupColliders);
-    
-    auto& tColTile(manager.addEntity());
-    tColTile.addComponent<TileComponent>(16,16, x, y, "collider.png", 16, 64);
-    tColTile.addGroup(Game::groupMap);
-
-
 }
 
 

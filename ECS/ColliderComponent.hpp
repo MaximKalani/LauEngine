@@ -22,13 +22,13 @@ public:
     ColliderComponent(std::string t)
     {
         tag = t;
-        tex = TextureManager::LoadTexture("collider.png");
+        tex = TextureManager::LoadTexture("assets/collider.png");
     }
     
     ColliderComponent(std::string t, int xpos, int ypos, int hs, int ws, int sc)
     {
         tag = t;
-        tex = TextureManager::LoadTexture("collider.png");
+        tex = TextureManager::LoadTexture("assets/collider.png");
         collider = {xpos, ypos, hs, ws};
         scale = sc;
     }
@@ -54,14 +54,13 @@ public:
             collider.y = static_cast<int>(transform->position.y);
             collider.w = transform->width * transform->scale;
             collider.h = transform->height * transform->scale;
-            //destR = {collider.x, collider.y, collider.w, collider.h};
-            
         }
-        //destR = {collider.x, collider.y, collider.w, collider.h};
+
     }
     void draw() override
     {
-        TextureManager::Draw(tex, srcR, collider, SDL_FLIP_NONE);
+        if(Game::drawColliders)
+            TextureManager::Draw(tex, srcR, collider, SDL_FLIP_NONE);
     }
 };
 

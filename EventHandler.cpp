@@ -33,6 +33,9 @@ void EventHandler::handleInput(Entity* player)
                         sprite->Play("Walk");
                         sprite->spriteFlip = SDL_FLIP_NONE;
                         break;
+                    case SDLK_F1:
+                        Game::drawColliders = !Game::drawColliders;
+                        break;
                     default:
                         break;
                 }

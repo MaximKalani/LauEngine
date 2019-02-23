@@ -7,3 +7,4 @@ Debug/
 Makefile
 *.txt
 !assets/tilemap.txt
+!assets/tilemap2.txt

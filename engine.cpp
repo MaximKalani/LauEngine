@@ -19,6 +19,7 @@ SDL_Event Game::event;
 
 
 bool Game::isRunning = false;
+bool Game::drawColliders = false;
 
 auto& player(manager.addEntity());
 
@@ -61,9 +62,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    mapp = new Map("assets/tilemap.txt", "assets/tileset.png", 16, 16, 16, 64);
+    mapp = new Map("assets/tilemap2.txt", "assets/tileset.png", 16, 16, 16, 64);
 
-    player.addComponent<TransformComponent>(400, 320, 24, 16, 4);
+    player.addComponent<TransformComponent>(400, 320, 24, 16, 3);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
@@ -151,6 +152,8 @@ void Game::render()
     {
         c->draw();
     }
+    
+
     SDL_RenderPresent(renderer);
 
 }
