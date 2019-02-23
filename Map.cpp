@@ -59,7 +59,6 @@ void Map::LoadMap(const char* path, int sizeX, int sizeY)
             if(tile == '1')
             {
                 AddCollider("terrain", x*destTileSize, y*destTileSize, destTileSize);
-
             }
             
         }

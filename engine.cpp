@@ -85,6 +85,14 @@ void Game::update()
     int pSpeed = player.getComponent<TransformComponent>().speed;
     auto pCollider = player.getComponent<ColliderComponent>();
     
+    if(pVel.x != 0 || pVel.y != 0)
+    {
+        player.getComponent<SpriteComponent>().Play("Walk");
+    }
+    else 
+    {
+        player.getComponent<SpriteComponent>().Play("Idle");
+    }
     
     if(pVel.x != 0 && pVel.y != 0)
     {
@@ -105,7 +113,6 @@ void Game::update()
         {
             if(c->getComponent<ColliderComponent>().tag == "terrain")
             {
-                printf("wall hit\n");
                 collides = true;
             }
         }
