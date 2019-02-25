@@ -1,5 +1,5 @@
 # LauEngine
-SDL2 C++ 2D Game Engine
+C++ 2D Game Engine based on SDL2 
 Fork of carlbirch's [BirchEngine](https://github.com/carlbirch/BirchEngine)
 
 # Made changes:
@@ -8,7 +8,11 @@ Fork of carlbirch's [BirchEngine](https://github.com/carlbirch/BirchEngine)
 - Added [this bug solution](https://github.com/carlbirch/BirchEngine/pull/4).
 
 # TODO:
-- Better Animations
+- Better Camera
+- Relative player position
+- Projectiles
 - Enemies
+- Combat System
+- Interact Mechanic
+- Animated Tiles
 - Level Manager
-- Smooth Camera Movement
