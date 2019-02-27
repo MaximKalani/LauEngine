@@ -30,7 +30,8 @@ class Game {
         static SDL_Rect camera;
         static bool isRunning;
         static bool drawColliders;
-
+        
+        int windowH, windowW;
 
         
         

@@ -37,6 +37,8 @@ Game::~Game()
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
     int flags = 0;
+    windowH = height;
+    windowW = width;
     if(fullscreen)
     {
         flags = SDL_WINDOW_FULLSCREEN;
@@ -125,13 +127,13 @@ void Game::update()
     {
         camera.y = 0; 
     }
-    if (camera.x + camera.w > 16*64)
+    if (camera.x + camera.w > mapp->mapSize.x)
     {
-        camera.x = 16*64 - camera.w;
+        camera.x = mapp->mapSize.x - camera.w;
     }
-    if (camera.y + camera.h > 16*64)
+    if (camera.y + camera.h > mapp->mapSize.y)
     {
-        camera.y = 16*64 - camera.h;
+        camera.y = mapp->mapSize.y - camera.h;
     }
 
 

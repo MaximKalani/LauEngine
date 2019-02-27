@@ -12,6 +12,8 @@ Map::Map(const char* tilemap, const char* tileset, int sizeX, int sizeY, int sou
     levelOneTileset = tileset;
     srcTileSize = sourceTileSize;
     destTileSize = destinationTileSize;
+    mapSize.x = sizeX * destTileSize;
+    mapSize.y = sizeY * destTileSize;
     LoadMap(levelOneTilemap, sizeX, sizeY);
 }
 

@@ -2,7 +2,7 @@
 #define MAP_HPP_INCLUDED
 
 #include <string>
-
+#include "Vector2D.hpp"
 
 class Map {
 
@@ -15,6 +15,8 @@ public:
     
     int srcTileSize;
     int destTileSize;
+    
+    Vector2D mapSize;
         
     void LoadMap(const char* path, int sizeX, int sizeY);
     void AddTile(int srcX, int srcY,int xpos, int ypos);
