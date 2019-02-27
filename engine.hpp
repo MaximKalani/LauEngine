@@ -27,9 +27,10 @@ class Game {
         
         static SDL_Renderer *renderer;
         static SDL_Event event;
-
+        static SDL_Rect camera;
         static bool isRunning;
         static bool drawColliders;
+
 
         
         

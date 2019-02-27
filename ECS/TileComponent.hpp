@@ -3,6 +3,8 @@
 
 #include "ECS.hpp"
 #include <SDL2/SDL.h>
+#include "../Vector2D.hpp"
+#include "../engine.hpp"
 #include "../TextureManager.hpp"
 
 class TileComponent : public Component
@@ -11,6 +13,7 @@ public:
     
     SDL_Texture* texture;
     SDL_Rect srcRect, destRect;
+    Vector2D position;
     
     TileComponent() = default;
     
@@ -28,13 +31,22 @@ public:
         
         srcRect.w = srcRect.h = srcTileSize;
         
-        destRect.x = xpos;
-        destRect.y = ypos;
+        position.x = static_cast<float>(xpos);
+        position.y = static_cast<float>(ypos);
         destRect.w = destRect.h = destTileSize;
         
     }
     
-    void draw()
+    void update() override
+    {
+
+            destRect.x = static_cast<int>(position.x - Game::camera.x);
+            destRect.y = static_cast<int>(position.y - Game::camera.y);
+        
+        
+    }
+    
+    void draw() override
     {
         TextureManager::Draw(texture, srcRect, destRect, SDL_FLIP_NONE);
     }

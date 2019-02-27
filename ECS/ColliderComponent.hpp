@@ -16,7 +16,7 @@ public:
     std::string tag;
     SDL_Texture* tex;
     SDL_Rect srcR = {0,0,16,16};
-   //SDL_Rect destR;
+    SDL_Rect destR;
     TransformComponent* transform;
     int x, y, h, w, scale;
     ColliderComponent(std::string t)
@@ -40,8 +40,6 @@ public:
             entity->addComponent<TransformComponent>((float)x, (float)y, h, w, scale);
         }
         transform = &entity->getComponent<TransformComponent>();
-        
-        //Game::colliders.push_back(this);
     }
     
     void update() override
@@ -56,11 +54,16 @@ public:
             collider.h = transform->height * transform->scale;
         }
 
+        destR.x = collider.x - Game::camera.x;
+        destR.y = collider.y - Game::camera.y;
+        destR.w = collider.w;
+        destR.h = collider.h;
+        
     }
     void draw() override
     {
         if(Game::drawColliders)
-            TextureManager::Draw(tex, srcR, collider, SDL_FLIP_NONE);
+            TextureManager::Draw(tex, srcR, destR, SDL_FLIP_NONE);
     }
 };
 

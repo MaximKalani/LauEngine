@@ -3,6 +3,7 @@
 
 #include "Components.hpp"
 #include "../Vector2D.hpp"
+#include "../engine.hpp"
 
 class TransformComponent : public Component
 {
@@ -55,7 +56,8 @@ public:
     }
     void update() override
     {
-      
+        position.x += static_cast<int>(velocity.x * speed);
+        position.y += static_cast<int>(velocity.y * speed);
     }
 
     

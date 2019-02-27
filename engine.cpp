@@ -16,10 +16,11 @@ Manager manager;
 
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Event Game::event;
-
+SDL_Rect Game::camera = {0,0,800,640};
 
 bool Game::isRunning = false;
 bool Game::drawColliders = false;
+
 
 auto& player(manager.addEntity());
 
@@ -64,7 +65,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
     mapp = new Map("assets/tilemap2.txt", "assets/tileset.png", 16, 16, 16, 64);
 
-    player.addComponent<TransformComponent>(400, 320, 24, 16, 3);
+    player.addComponent<TransformComponent>(80, 100, 24, 16, 3);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
@@ -78,12 +79,17 @@ void Game::handleEvents()
 
 void Game::update()
 {
+    Vector2D pPos = player.getComponent<TransformComponent>().position;
+
     manager.refresh();
     manager.update();
 
     Vector2D pVel = player.getComponent<TransformComponent>().velocity;
-    int pSpeed = player.getComponent<TransformComponent>().speed;
-    auto pCollider = player.getComponent<ColliderComponent>();
+
+    if(pVel.x != 0 && pVel.y != 0)
+    {
+        player.getComponent<TransformComponent>().speed = 2;
+    }
     
     if(pVel.x != 0 || pVel.y != 0)
     {
@@ -94,51 +100,40 @@ void Game::update()
         player.getComponent<SpriteComponent>().Play("Idle");
     }
     
-    if(pVel.x != 0 && pVel.y != 0)
-    {
-        pSpeed = 2;
-    }
-    
-    //try to move
-    for(auto c : colliders)
-    {
-        c->getComponent<ColliderComponent>().collider.x += -(pVel.x * pSpeed);
-        c->getComponent<ColliderComponent>().collider.y += -(pVel.y * pSpeed);
-    }
-    
-    //if (collides) - move back
+
     for (auto c : colliders)
     {
-        if(Collision::AABB(c->getComponent<ColliderComponent>(), pCollider))
+        if(Collision::AABB(c->getComponent<ColliderComponent>().destR, player.getComponent<ColliderComponent>().destR))
         {
             if(c->getComponent<ColliderComponent>().tag == "terrain")
             {
-                collides = true;
+                printf("Wall hit");
+                player.getComponent<TransformComponent>().position = pPos;
             }
         }
-        
-        
     }
 
-    if(!collides) //move tiles if does not collide
-    {
-            
-        for (auto t : tiles)
-        {
-            t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
-            t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
-        }
 
-    }
-    else //if collide - do not move tiles and move colliders back
+    camera.x = static_cast<int>(player.getComponent<TransformComponent>().position.x - 400);
+    camera.y = static_cast<int>(player.getComponent<TransformComponent>().position.y - 320);
+
+    if (camera.x < 0)
     {
-        for(auto c : colliders)
-        {
-            c->getComponent<ColliderComponent>().collider.x += (pVel.x * pSpeed);
-            c->getComponent<ColliderComponent>().collider.y += (pVel.y * pSpeed);
-        }
-        collides = false;
+        camera.x = 0;
     }
+    if (camera.y < 0) 
+    {
+        camera.y = 0; 
+    }
+    if (camera.x + camera.w > 16*64)
+    {
+        camera.x = 16*64 - camera.w;
+    }
+    if (camera.y + camera.h > 16*64)
+    {
+        camera.y = 16*64 - camera.h;
+    }
+
 
 }
 
@@ -160,7 +155,6 @@ void Game::render()
         c->draw();
     }
     
-
     SDL_RenderPresent(renderer);
 
 }
