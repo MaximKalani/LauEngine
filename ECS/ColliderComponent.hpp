@@ -18,6 +18,7 @@ public:
     SDL_Rect srcR = {0,0,16,16};
     SDL_Rect destR;
     TransformComponent* transform;
+    ProjectileComponent* proj;
     int x, y, h, w, scale;
     ColliderComponent(std::string t)
     {
@@ -35,30 +36,41 @@ public:
     
     void init() override
     {
-        if(!entity->hasComponent<TransformComponent>())
+        if ( tag != "projectile")
         {
-            entity->addComponent<TransformComponent>((float)x, (float)y, h, w, scale);
+            if(!entity->hasComponent<TransformComponent>())
+            {
+                    entity->addComponent<TransformComponent>((float)x, (float)y, h, w, scale);
+            }
+            transform = &entity->getComponent<TransformComponent>();
         }
-        transform = &entity->getComponent<TransformComponent>();
+        else
+            proj = &entity->getComponent<ProjectileComponent>();
     }
     
     void update() override
     {
-        if (tag != "terrain")
+        if (tag == "player")
         {
-            
-        
             collider.x = static_cast<int>(transform->position.x);
             collider.y = static_cast<int>(transform->position.y);
             collider.w = transform->width * transform->scale;
             collider.h = transform->height * transform->scale;
         }
-
-        destR.x = collider.x - Game::camera.x;
-        destR.y = collider.y - Game::camera.y;
-        destR.w = collider.w;
-        destR.h = collider.h;
-        
+        if(tag == "projectile")
+        {
+            destR.x = proj->destRect.x;  
+            destR.y = proj->destRect.y;  
+            destR.h = proj->destRect.h;  
+            destR.w = proj->destRect.w;  
+        }
+        else
+        {
+            destR.x = collider.x - Game::camera.x;
+            destR.y = collider.y - Game::camera.y;
+            destR.w = collider.w;
+            destR.h = collider.h;
+        }
     }
     void draw() override
     {

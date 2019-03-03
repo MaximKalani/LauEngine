@@ -23,10 +23,12 @@ bool Game::drawColliders = false;
 
 
 auto& player(manager.addEntity());
+auto& projectile(manager.addEntity());
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
+auto& projectiles(manager.getGroup(Game::groupProjectiles));
 
 Game::Game()
 {}
@@ -71,6 +73,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
+    
+    projectile.addComponent<ProjectileComponent>(90, 110, 16, 16, 1, 500, 7, "assets/SiegHeil.png", 1, 1);
+    projectile.addComponent<ColliderComponent>("projectile");
+    projectile.addGroup(groupProjectiles);
     
  }
 
@@ -155,6 +161,10 @@ void Game::render()
     for (auto& c : colliders)
     {
         c->draw();
+    }    
+    for (auto& j : projectiles)
+    {
+        j->draw();
     }
     
     SDL_RenderPresent(renderer);
