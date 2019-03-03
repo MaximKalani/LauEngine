@@ -5,12 +5,13 @@
 #include "Components.hpp"
 #include "../TextureManager.hpp"
 #include "../Vector2D.hpp"
+#include "../Collision.hpp"
 
 class ProjectileComponent : public Component
 {
 public:
     SDL_Rect srcRect = { 0,0,16,16 };
-    SDL_Rect destRect;
+    SDL_Rect destRect, position;
     SDL_Texture* tex;
     int speed;
     int dist;
@@ -19,7 +20,7 @@ public:
     Vector2D direction;
     ProjectileComponent (int x, int y, int h, int w, int spd, int dis, int sc, const char* t, float dx, float dy)
     {
-        destRect = { x, y, h*sc, w*sc };
+        position = { x, y, h*sc, w*sc };
         tex = TextureManager::LoadTexture(t);
         speed = spd;
         dist = dis;
@@ -32,8 +33,15 @@ public:
         track += speed;
         if( track > dist ) 
             entity->destroy();
-        destRect.x += static_cast<int>( direction.x * speed ) - Game::camera.x;
-        destRect.y += static_cast<int>( direction.y * speed ) - Game::camera.y;
+        if( !Collision::AABB(destRect, Game::camera))
+            entity->destroy();
+        position.x += static_cast<int>( direction.x * speed);
+        position.y += static_cast<int>( direction.y * speed);
+        
+        destRect.x = position.x - Game::camera.x;
+        destRect.y = position.y - Game::camera.y;
+        destRect.w = position.w;
+        destRect.h = position.h;
     }
     void draw() override
     {

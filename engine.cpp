@@ -74,7 +74,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player.addComponent<ColliderComponent>("player");
     player.addGroup(groupPlayers);
     
-    projectile.addComponent<ProjectileComponent>(90, 110, 16, 16, 1, 500, 7, "assets/SiegHeil.png", 1, 1);
+    projectile.addComponent<ProjectileComponent>(90, 110, 16, 16, 1, 5000, 7, "assets/SiegHeil.png", 1, 1);
     projectile.addComponent<ColliderComponent>("projectile");
     projectile.addGroup(groupProjectiles);
     
