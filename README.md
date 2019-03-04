@@ -8,9 +8,6 @@ Fork of carlbirch's [BirchEngine](https://github.com/carlbirch/BirchEngine)
 - Added [this bug solution](https://github.com/carlbirch/BirchEngine/pull/4).
 
 # TODO:
-- Better Camera
-- Relative player position
-- Projectiles
 - Enemies
 - Combat System
 - Interact Mechanic
