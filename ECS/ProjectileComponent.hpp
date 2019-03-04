@@ -42,6 +42,8 @@ public:
         destRect.y = position.y - Game::camera.y;
         destRect.w = position.w;
         destRect.h = position.h;
+        
+        
     }
     void draw() override
     {
