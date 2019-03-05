@@ -8,7 +8,7 @@
 #include "ColliderComponent.hpp"
 #include "SpriteComponent.hpp"
 #include "TileComponent.hpp"
-
+#include "ShootComponent.hpp"
 
 
 #endif // COMPONENTS_HPP_INCLUDED

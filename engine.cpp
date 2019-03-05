@@ -23,7 +23,7 @@ bool Game::drawColliders = false;
 
 
 auto& player(manager.addEntity());
-auto& projectile(manager.addEntity());
+
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
@@ -68,15 +68,16 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     }
 
     mapp = new Map("assets/tilemap2.txt", "assets/tileset.png", 16, 16, 16, 64);
+    
+
 
     player.addComponent<TransformComponent>(80, 100, 24, 16, 3);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<ColliderComponent>("player");
+    player.addComponent<ShootComponent>();
     player.addGroup(groupPlayers);
     
-    projectile.addComponent<ProjectileComponent>(90, 110, 16, 16, 2, 5000, 7, "assets/fireball.png", 1, 1);
-    projectile.addComponent<ColliderComponent>("projectile");
-    projectile.addGroup(groupProjectiles);
+
     
  }
 
@@ -115,7 +116,6 @@ void Game::update()
         {
             if(c->getComponent<ColliderComponent>().tag == "terrain")
             {
-                printf("Wall hit");
                 player.getComponent<TransformComponent>().position = pPos;
             }
         }

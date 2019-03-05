@@ -11,7 +11,7 @@ public:
     
     Vector2D position;
     Vector2D velocity;
-    
+    Vector2D lastDirection;
     int height = 16;
     int width = 16;
     int scale = 1;
@@ -56,6 +56,9 @@ public:
     }
     void update() override
     {
+        if(velocity.x != 0 || velocity.y != 0)
+            lastDirection = velocity;
+        
         position.x += static_cast<int>(velocity.x * speed);
         position.y += static_cast<int>(velocity.y * speed);
     }

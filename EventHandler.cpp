@@ -51,6 +51,9 @@ void EventHandler::handleInput(Entity* player)
                     case SDLK_d:
                         transform->velocity.x = 0;
                         break;
+                    case SDLK_e:
+                        player->getComponent<ShootComponent>().shoot("fireball");
+                        break;
                     case SDLK_ESCAPE:
                         Game::isRunning = false;
                     default:

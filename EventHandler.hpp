@@ -3,8 +3,7 @@
 
 #include "engine.hpp"
 #include "ECS/ECS.hpp"
-#include "ECS/SpriteComponent.hpp"
-#include "ECS/TransformComponent.hpp"
+#include "ECS/Components.hpp"
 
 
 class EventHandler
