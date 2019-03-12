@@ -23,10 +23,12 @@ bool Game::drawColliders = false;
 
 
 auto& player(manager.addEntity());
+auto& enemy(manager.addEntity());
 
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
+auto& enemies(manager.getGroup(Game::groupEnemies));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& projectiles(manager.getGroup(Game::groupProjectiles));
 
@@ -75,8 +77,15 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
     player.addComponent<ColliderComponent>("player");
     player.addComponent<ShootComponent>();
+    player.addComponent<HPComponent>(10);
     player.addGroup(groupPlayers);
     
+    enemy.addComponent<TransformComponent>(180, 100, 24, 16, 3);
+    enemy.addComponent<SpriteComponent>("assets/sprite.png", true);
+    enemy.addComponent<ColliderComponent>("enemy");
+    enemy.addComponent<ShootComponent>();
+    enemy.addComponent<HPComponent>(3);
+    enemy.addGroup(groupEnemies);
 
     
  }
@@ -120,8 +129,30 @@ void Game::update()
             }
         }
     }
-
-
+    for (auto p : projectiles)
+    {
+        for (auto e : enemies)
+        {
+            if(Collision::AABB(e->getComponent<ColliderComponent>().destR, p->getComponent<ColliderComponent>().destR))
+            {
+                e->getComponent<HPComponent>().addToHP(-1);
+                p->destroy();
+            }
+        }
+        for (auto c : colliders)
+        {
+            if(Collision::AABB(c->getComponent<ColliderComponent>().destR, p->getComponent<ColliderComponent>().destR))
+            {
+                p->destroy();
+            }
+        }
+        if(Collision::AABB(p->getComponent<ColliderComponent>().destR, player.getComponent<ColliderComponent>().destR))
+        {
+            if(p->getComponent<ProjectileComponent>().hurtsPlayer)
+                player.getComponent<HPComponent>().addToHP(-1);
+        }
+        
+    }
     camera.x = static_cast<int>(player.getComponent<TransformComponent>().position.x - 400);
     camera.y = static_cast<int>(player.getComponent<TransformComponent>().position.y - 320);
 
@@ -153,6 +184,10 @@ void Game::render()
     for (auto& t : tiles)
     {
         t->draw();
+    }
+    for (auto& e : enemies)
+    {
+        e->draw();
     }
     for (auto& p : players)
     {

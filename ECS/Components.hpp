@@ -9,6 +9,6 @@
 #include "SpriteComponent.hpp"
 #include "TileComponent.hpp"
 #include "ShootComponent.hpp"
-
+#include "HPComponent.hpp"
 
 #endif // COMPONENTS_HPP_INCLUDED

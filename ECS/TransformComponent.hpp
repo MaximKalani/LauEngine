@@ -52,7 +52,9 @@ public:
     void init() override
     {
         velocity.x = 0;
-        velocity.y = 0;        
+        velocity.y = 0;
+        lastDirection.x = 1;        
+        lastDirection.y = 0;        
     }
     void update() override
     {

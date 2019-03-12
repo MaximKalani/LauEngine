@@ -28,9 +28,9 @@ public:
     void shoot(std::string projType)
     {
         transform = &entity->getComponent<TransformComponent>();
-        //collider = &entity->getComponent<ColliderComponent>();
-        //if(collider->tag == "player")
-            //hurtsPlayer = false;
+        collider = &entity->getComponent<ColliderComponent>();
+        if(collider->tag == "player")
+            hurtsPlayer = false;
         
         projPosition.x = (transform->position.x + transform->lastDirection.x * transform->height);
         projPosition.y = (transform->position.y + transform->lastDirection.y * transform->width) + 20;

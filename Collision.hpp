@@ -2,8 +2,8 @@
 #define COLLISION_HPP_INCLUDED
 
 #include "SDL2/SDL.h"
+#include "ECS/Components.hpp"
 
-class ColliderComponent;
 
 class Collision
 {

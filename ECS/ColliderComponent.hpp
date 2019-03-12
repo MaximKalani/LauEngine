@@ -50,7 +50,7 @@ public:
     
     void update() override
     {
-        if (tag == "player")
+        if (tag == "player" || tag == "enemy")
         {
             collider.x = static_cast<int>(transform->position.x);
             collider.y = static_cast<int>(transform->position.y);
