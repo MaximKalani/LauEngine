@@ -11,7 +11,7 @@
 class SpriteComponent : public Component
 {
 private:
-    TransformComponent *transform;
+    TransformComponent *transform = nullptr;
     SDL_Texture *texture;
     SDL_Rect srcRect, destRect;
     
@@ -69,7 +69,8 @@ public:
     }
     void init() override
     {
-        transform = &entity->getComponent<TransformComponent>();
+        if(entity->hasComponent<TransformComponent>())
+            transform = &entity->getComponent<TransformComponent>();
 
         srcRect.x = srcRect.y = 0;
         srcRect.w = transform->width;
@@ -84,6 +85,7 @@ public:
         if(animated)
         {
             srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
+            
         }
         
         srcRect.y = animIndex * transform->height;

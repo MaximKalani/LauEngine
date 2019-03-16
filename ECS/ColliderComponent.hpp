@@ -17,8 +17,8 @@ public:
     SDL_Texture* tex;
     SDL_Rect srcR = {0,0,16,16};
     SDL_Rect destR;
-    TransformComponent* transform;
-    ProjectileComponent* proj;
+    TransformComponent* transform = nullptr;
+    ProjectileComponent* proj = nullptr;
     int x, y, h, w, scale;
     ColliderComponent(std::string t)
     {
@@ -45,7 +45,8 @@ public:
             transform = &entity->getComponent<TransformComponent>();
         }
         else
-            proj = &entity->getComponent<ProjectileComponent>();
+            if(entity->hasComponent<ProjectileComponent>())
+                proj = &entity->getComponent<ProjectileComponent>();
     }
     
     void update() override

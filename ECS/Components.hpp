@@ -10,5 +10,6 @@
 #include "TileComponent.hpp"
 #include "ShootComponent.hpp"
 #include "HPComponent.hpp"
+#include "AIComponent.hpp"
 
 #endif // COMPONENTS_HPP_INCLUDED

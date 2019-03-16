@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <vector>
 #include "Vector2D.hpp"
+#include "audio.hpp"
 
 class ColliderComponent;
 
@@ -32,7 +33,7 @@ class Game {
         static bool drawColliders;
         
         int windowH, windowW;
-
+        Audio effect;
         
         
         enum groupLabels : std::size_t

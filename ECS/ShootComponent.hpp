@@ -12,8 +12,8 @@ extern Manager manager;
 class ShootComponent : public Component
 {
 public:
-    TransformComponent* transform;
-    ColliderComponent* collider;
+    TransformComponent* transform = nullptr;
+    ColliderComponent* collider = nullptr;
     bool hurtsPlayer = true;
     Vector2D projPosition;
     ShootComponent()
@@ -27,8 +27,11 @@ public:
     }
     void shoot(std::string projType)
     {
-        transform = &entity->getComponent<TransformComponent>();
-        collider = &entity->getComponent<ColliderComponent>();
+        if(entity->hasComponent<TransformComponent>())
+            transform = &entity->getComponent<TransformComponent>();
+        if(entity->hasComponent<ColliderComponent>())
+            collider = &entity->getComponent<ColliderComponent>();
+            
         if(collider->tag == "player")
             hurtsPlayer = false;
         

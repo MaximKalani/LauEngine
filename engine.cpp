@@ -70,8 +70,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     }
 
     mapp = new Map("assets/tilemap2.txt", "assets/tileset.png", 16, 16, 16, 64);
+    effect.load("assets/Spy.wav");
     
-
 
     player.addComponent<TransformComponent>(80, 100, 24, 16, 3);
     player.addComponent<SpriteComponent>("assets/sprite.png", true);
@@ -80,11 +80,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player.addComponent<HPComponent>(10);
     player.addGroup(groupPlayers);
     
-    enemy.addComponent<TransformComponent>(180, 100, 24, 16, 3);
-    enemy.addComponent<SpriteComponent>("assets/sprite.png", true);
+    enemy.addComponent<TransformComponent>(500, 100, 24, 16, 3);
+    enemy.addComponent<SpriteComponent>("assets/enemy.png", true);
     enemy.addComponent<ColliderComponent>("enemy");
     enemy.addComponent<ShootComponent>();
     enemy.addComponent<HPComponent>(3);
+    enemy.addComponent<AIComponent>();
     enemy.addGroup(groupEnemies);
 
     
@@ -108,6 +109,8 @@ void Game::update()
     {
         player.getComponent<TransformComponent>().speed = 2;
     }
+    else
+        player.getComponent<TransformComponent>().speed = 3;
     
     if(pVel.x != 0 || pVel.y != 0)
     {
@@ -129,6 +132,7 @@ void Game::update()
             }
         }
     }
+    
     for (auto p : projectiles)
     {
         for (auto e : enemies)
@@ -137,6 +141,7 @@ void Game::update()
             {
                 e->getComponent<HPComponent>().addToHP(-1);
                 p->destroy();
+                effect.play();
             }
         }
         for (auto c : colliders)
@@ -151,8 +156,22 @@ void Game::update()
             if(p->getComponent<ProjectileComponent>().hurtsPlayer)
                 player.getComponent<HPComponent>().addToHP(-1);
         }
-        
     }
+    
+//TODO knockback and invincibility for 30 frames
+//    for (auto e : enemies)
+//    {
+//        if(Collision::AABB(e->getComponent<ColliderComponent>().destR, player.getComponent<ColliderComponent>().destR))
+//        {
+//            player.getComponent<HPComponent>().addToHP(-1);
+//            for(int i = 0; i < 10; i++)
+//            {
+//                player.getComponent<TransformComponent>().position.x
+//                player.getComponent<TransformComponent>().position.y
+//            }
+//        }
+//    }
+
     camera.x = static_cast<int>(player.getComponent<TransformComponent>().position.x - 400);
     camera.y = static_cast<int>(player.getComponent<TransformComponent>().position.y - 320);
 
