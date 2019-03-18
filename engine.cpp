@@ -87,7 +87,6 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     enemy.addComponent<HPComponent>(3);
     enemy.addComponent<AIComponent>();
     enemy.addGroup(groupEnemies);
-
     
  }
 
@@ -98,7 +97,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
-    Vector2D pPos = player.getComponent<TransformComponent>().position;
+    // Vector2D pPos = player.getComponent<TransformComponent>().position; 
 
     manager.refresh();
     manager.update();
@@ -128,7 +127,7 @@ void Game::update()
         {
             if(c->getComponent<ColliderComponent>().tag == "terrain")
             {
-                player.getComponent<TransformComponent>().position = pPos;
+                player.getComponent<TransformComponent>().position = player.getComponent<TransformComponent>().lastPosition;
             }
         }
     }
@@ -170,7 +169,7 @@ void Game::update()
 //                player.getComponent<TransformComponent>().position.y
 //            }
 //        }
-//    }
+//    } 
 
     camera.x = static_cast<int>(player.getComponent<TransformComponent>().position.x - 400);
     camera.y = static_cast<int>(player.getComponent<TransformComponent>().position.y - 320);

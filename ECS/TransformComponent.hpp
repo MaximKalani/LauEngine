@@ -10,6 +10,7 @@ class TransformComponent : public Component
 public:
     
     Vector2D position;
+    Vector2D lastPosition;
     Vector2D velocity;
     Vector2D lastDirection;
     int height = 16;
@@ -58,6 +59,7 @@ public:
     }
     void update() override
     {
+        lastPosition = position;
         if(velocity.x != 0 || velocity.y != 0)
             lastDirection = velocity;
         
