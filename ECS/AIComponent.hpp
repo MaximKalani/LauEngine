@@ -33,6 +33,7 @@ public:
     void update() override
     {
         auto& colliders(manager.getGroup(Game::groupColliders));
+        
         if(static_cast<int>((SDL_GetTicks() / 1000) % 2) == 1)
         {
             transform->velocity.x = 1;
@@ -53,17 +54,21 @@ public:
             sprite->Play("Idle");
         }
 
-//        for (auto c : colliders)
-//        {
-//            if(Collision::AABB(c->getComponent<ColliderComponent>().destR, collider->destR))
-//            {
-//                if(c->getComponent<ColliderComponent>().tag == "terrain")
-//                {
-//                    transform->position = transform->lastPosition;
-//                }
-//            }
-//        }
+       for (auto c : colliders)
+       {
+           if(Collision::AABB(c->getComponent<ColliderComponent>().destR, collider->destR))
+           {
+               if(c->getComponent<ColliderComponent>().tag == "terrain")
+               {
+                   transform->position = transform->lastPosition;
+               }
+
+           }
+
+       }
+
     }
+
 };
 
 #endif

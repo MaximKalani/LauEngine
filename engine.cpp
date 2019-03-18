@@ -80,7 +80,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player.addComponent<HPComponent>(10);
     player.addGroup(groupPlayers);
     
-    enemy.addComponent<TransformComponent>(500, 100, 24, 16, 3);
+    enemy.addComponent<TransformComponent>(550, 100, 24, 16, 3);
     enemy.addComponent<SpriteComponent>("assets/enemy.png", true);
     enemy.addComponent<ColliderComponent>("enemy");
     enemy.addComponent<ShootComponent>();
