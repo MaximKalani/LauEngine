@@ -1,10 +1,11 @@
 #ifndef AICOMPONENT_HPP_INCLUDED
 #define AICOMPONENT_HPP_INCLUDED
 
+#include "../Collision.hpp"
 #include "ECS.hpp"
 #include "Components.hpp"
 #include "../Vector2D.hpp"
-#include "../Collision.hpp"
+
 
 extern Manager manager;
 
@@ -14,6 +15,7 @@ public:
     TransformComponent* transform = nullptr;
     SpriteComponent* sprite = nullptr;
     ColliderComponent* collider = nullptr;
+    SDL_Rect result;
     AIComponent()
     {
         
@@ -56,15 +58,13 @@ public:
 
        for (auto c : colliders)
        {
-           if(Collision::AABB(c->getComponent<ColliderComponent>().destR, collider->destR))
+           if(SDL_IntersectRect(&c->getComponent<ColliderComponent>().destR, &collider->destR, &result) == SDL_TRUE)
            {
                if(c->getComponent<ColliderComponent>().tag == "terrain")
                {
                    transform->position = transform->lastPosition;
                }
-
            }
-
        }
 
     }
